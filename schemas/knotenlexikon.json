@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Knotenlexikon Schema",
+  "description": "Master lexicon for Neuro-Hybridstil terminology",
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TermEntry"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "created_at": { "type": "integer" },
+        "last_updated": { "type": "integer" },
+        "total_terms": { "type": "integer" }
+      }
+    }
+  },
+  "definitions": {
+    "TermEntry": {
+      "type": "object",
+      "required": [
+        "node_id",
+        "german_form",
+        "code_label",
+        "definition",
+        "category"
+      ],
+      "properties": {
+        "node_id": { "type": "string" },
+        "german_form": { "type": "string" },
+        "code_label": { "type": "string", "pattern": "^[A-Z][a-zA-Z0-9]*$" },
+        "multilingual_labels": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "definition": { "type": "string" },
+        "examples": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "NodeType",
+            "ChannelType",
+            "ClusterType",
+            "PathType",
+            "InterfaceType",
+            "MetaphorsystemType",
+            "SystemInfrastructure"
+          ]
+        },
+        "word_math_compliance": { "$ref": "#/definitions/WordMathScore" },
+        "phonotactic_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "validation_status": {
+          "type": "string",
+          "enum": ["Anchored", "ConceptValidated", "DualpfadPassed", "Lexicalized", "Deprecated"]
+        },
+        "interop_metadata": { "$ref": "#/definitions/InteropMetadata" }
+      }
+    },
+    "WordMathScore": {
+      "type": "object",
+      "properties": {
+        "head_final_compliance": { "type": "number" },
+        "modifier_left_compliance": { "type": "number" },
+        "structural_well_formedness": { "type": "number" },
+        "cognitive_efficiency": { "type": "number" },
+        "overall_score": { "type": "number" }
+      }
+    },
+    "InteropMetadata": {
+      "type": "object",
+      "properties": {
+        "onnx_compatible": { "type": "boolean" },
+        "neuroml_compatible": { "type": "boolean" },
+        "loihi_compatible": { "type": "boolean" },
+        "spinnaker_compatible": { "type": "boolean" },
+        "truenorth_compatible": { "type": "boolean" },
+        "schema_compliant": { "type": "boolean" },
+        "platforms_tested": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}
