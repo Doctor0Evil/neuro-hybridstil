@@ -1,0 +1,40 @@
+[package]
+name = "neuro-hybridstil"
+version = "0.1.0"
+edition = "2021"
+authors = ["NeuroHybridstil Contributors"]
+description = "German-headed hybrid terminology engine for neuromorphic computing and legal systems"
+license = "Apache-2.0"
+repository = "https://github.com/Doctor0Evil/neuro-hybridstil"
+readme = "README.md"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.35", features = ["full"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+regex = "1.10"
+lazy_static = "1.4"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+dashmap = "5.5"
+rayon = "1.7"
+metrics = "0.21"
+nom = "7.1"
+
+[dev-dependencies]
+criterion = "0.5"
+proptest = "1.4"
+
+[[example]]
+name = "basic_term_registration"
+path = "examples/basic_term_registration.rs"
+
+[[example]]
+name = "fokuspfad_workflow"
+path = "examples/fokuspfad_workflow.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
